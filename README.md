@@ -6,6 +6,7 @@ Project aims to provide simple notifications exchange between friends
  * Friends Search engine
  * Friends management system
  * Notification exchange system
+ * Features responsive design targeting mobile devices as well as desktops
  
 ### Working example:
 http://eventsaroundus.azurewebsites.net/
