@@ -1,0 +1,15 @@
+﻿@using MVCDemo.CustomHtmlHelpers
+@model MVCDemo.Models.UserToLoginViewModel
+
+<div class="form-horizontal row-cols-gutter-10">
+    <div class="col-sm-12 text-right vertical-gutter-10">
+        <div>
+            <label class="control-label">
+                Zalogowany jako:
+                @Html.ActionLink(Model.UserName, "Edit", "User", new { id = Model.Id.ToString() }, new { id = "lnkbtnUserDetails" }),
+                <span id="lnkbtnLogout" class="linklike">Wyloguj</span>
+            </label>
+        </div>
+    </div>
+</div>
+

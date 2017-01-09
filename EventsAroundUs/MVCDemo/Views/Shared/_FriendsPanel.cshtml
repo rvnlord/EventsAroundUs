@@ -1,0 +1,42 @@
+﻿@using MVCDemo.Models
+@using System.Data.Entity
+@model List<User>
+
+@{
+    const string thumb = "~/Images/No_Image_Available.png";
+    var users = Model;
+    var authUserVM = UserToLoginViewModel.GetAuthenticated();
+    var authUser = new ProjectDbContext().Users.Include(u => u.AddedToFriends)
+        .Single(u => u.UserName == authUserVM.UserName);
+}
+<div class="container outer-container-gutter-10">
+    <div class="row row-cols-gutter-10">
+        @foreach (var u in users)
+        {
+            var avatar = u.AvatarId == null || u.Avatar == null ? thumb : u.Avatar.FullUrl;
+            var isNotPartialFriend = !authUser.HasAddedToFriends(u) && !authUser.IsAddedAsFriendBy(u);
+            if (isNotPartialFriend)
+            {
+                <div class="col-sm-6 friends-col">
+                    <div class="row row-cols-gutter-10 friends-item-row row-flex">
+                        <div class="col-fixed-100 vertical-gutter-10">
+                            <div class="height-100">
+                                <div class="bg-img-responsive" style="background-image: Url('@Url.Content(avatar)')"></div>
+                            </div>
+                        </div>
+                        <div class="col-fixed-rest-1 vertical-gutter-10">
+                            <div class="height-100 line-height-1 padding-top-40">
+                                @u.UserName
+                            </div>
+                        </div>
+                        <div class="col-fixed-100 vertical-gutter-10">
+                            <div class="height-100 line-height-1 padding-top-33">
+                                <input value="Dodaj" type="button" class="btn btn-primary btn-add-friend width-100" user-id="@u.Id" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

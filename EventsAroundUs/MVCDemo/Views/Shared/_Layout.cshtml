@@ -1,0 +1,78 @@
+﻿@using MVCDemo.CustomHtmlHelpers
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="icon" type="image/png" href="@Url.Content("~/Images/Icons/favicon.png")" />
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/all.css" rel="stylesheet" />
+    <link href="~/Content/Custom/Styles.css" rel="stylesheet" />
+    <meta name="description" content="Interaktywne Książki" />
+</head>
+<body>
+
+    @* DEBUGOWANIE *@
+
+    @*<div id="divDebug">Wiadomości Debugowania<br /><br /></div>*@
+
+    @* =========== *@
+
+    <div id="divMain" class="container container-gutter-0 body-content">
+        @{
+            var controller = ViewContext.RouteData.GetRequiredString("controller");
+            var action = ViewContext.RouteData.GetRequiredString("action");
+            var id = ViewContext.RouteData.Values["id"];
+        }
+        
+        <div id="divNotificationsPanelContainer"></div>
+
+        <div id="divToolbar" class="outer-container-gutter-10">
+            <div class="row row-cols-gutter-10 reorder-xs">
+                <div id="divSearchPanelContainer" class="col-sm-6"></div>
+                <div id="divLoginPanelContainer" class="col-sm-6"></div>
+            </div>
+        </div>
+
+        <div id="divFriendsPanelContainer" class="min-height-120"></div>
+       
+        <div class="container outer-container-gutter-10 body-container">
+            @RenderBody()
+        </div>
+
+        <div id="divError"></div>
+    </div>
+    <script src="~/Scripts/jquery-2.1.4.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+    <script type="text/javascript">
+        $.url = function (path) {
+            return '@Url.Content("~/")' + path;
+        };
+        $.controller = '@controller';
+        $.action = '@action';
+        $.id = '@id';
+        $.widget.bridge('uitooltip', $.ui.tooltip);
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    <script src="~/Scripts/MicrosoftAjax.js"></script>
+    <script src="~/Scripts/MicrosoftMvcAjax.js"></script>
+    <script src="~/Scripts/linq.js"></script>
+    <script src="~/Scripts/jquery.linq.js"></script>
+    <script src="~/Scripts/jquery.cookie.js"></script>
+    <script src="~/Scripts/eventPause.js"></script>
+    <script src="~/Scripts/attrchange.js"></script>
+    <script src="~/Scripts/moment.js"></script>
+    <script src="~/Scripts/Base/Global.js"></script>
+    @RenderSection("Scripts", false)
+    <script src="~/Scripts/Base/After.js"></script>
+</body>
+
+</html>

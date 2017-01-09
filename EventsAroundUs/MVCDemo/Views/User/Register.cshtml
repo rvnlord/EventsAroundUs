@@ -1,0 +1,38 @@
+﻿@using System.Web.Mvc.Html
+@using MVCDemo.Common
+@using MVCDemo.Models
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<div class="row row-cols-gutter-10">
+    <div class="col-sm-12">
+        <div id="divRegisterPanelContainer">
+            <div class="row row-cols-gutter-10">
+                <div class="col-xs-12 vertical-gutter-10">
+                    <span class="bold_descriptions">Nie mam konta, <span id="lnkbtnLoadRegisterPanel" class="linklike">Zarejestruj</span></span>
+                </div>
+            </div>
+        </div>
+        <div id="divActivateAccountPanelContainer">
+            <div class="row row-cols-gutter-10">
+                <div class="col-xs-12 vertical-gutter-10">
+                    <span class="bold_descriptions">Mam już konto, <span id="lnkbtnLoadActivateAccountPanel" class="linklike">Wprowadź Kod Aktywacyjny</span></span>
+                </div>
+            </div>
+        </div>
+        <div id="divRemindPasswordPanelContainer">
+            <div class="row row-cols-gutter-10">
+                <div class="col-xs-12 vertical-gutter-10">
+                    <span class="bold_descriptions">Nie pamiętam hasła, <span id="lnkbtnLoadRemindPasswordPanel" class="linklike">Przypomnij</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/Scripts/User/Register.js"></script>
+}

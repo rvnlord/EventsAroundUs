@@ -1,0 +1,62 @@
+﻿@using MVCDemo.Common
+@using MVCDemo.CustomHtmlHelpers
+@model MVCDemo.Models.UserToLoginViewModel
+
+@{
+    var modelType = Model.GetType();
+    var userNameDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.UserName)));
+    var passwordDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.Password)));
+}
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmLoginPanel", @class = "form-horizontal row-cols-gutter-10" }))
+{
+    <div class="col-xs-12">
+        <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+            <div class="col-sm-3 vertical-gutter-10">
+                <div>@Html.LabelFor(m => m.UserName, userNameDisplayName + ": ", new { @class = "control-label" })</div>
+            </div>
+            <div class="col-sm-4 vertical-gutter-10">
+                <div>@Html.TextBoxFor(m => m.UserName, new { id = "txtLoginUserName", @placeholder = $"{userNameDisplayName}...", @class = "form-control" })</div>
+            </div>
+            <div class="col-sm-5 vertical-gutter-10">
+                <div>
+                    @Html.CheckBoxFor(m => m.RememberMe, new { id = "cbLoginRememberMe", @class = "checkbox" })
+                    @Html.LabelHtmlFor(m => m.RememberMe, "<span></span>{prop}", new { @for = "cbLoginRememberMe", @class = "control-label" })
+                </div>
+            </div>
+        </div>
+        <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+            <div class="col-sm-3 vertical-gutter-10">
+                <div>
+                    @Html.LabelFor(m => m.Password, passwordDisplayName + ": ", new { @class = "control-label" })
+                </div>
+            </div>
+            <div class="col-sm-4 vertical-gutter-10">
+                <div>
+                    @Html.PasswordFor(m => m.Password, new { id = "txtLoginPassword", @placeholder = $"{passwordDisplayName}...", @class = "form-control" })
+                </div>
+            </div>
+            <div class="col-sm-5 vertical-gutter-10">
+                <div>
+                    <input id="btnLoginSubmit" class="btn btn-primary" type="button" value="Zaloguj" />
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-gutter-10">
+            <div class="col-sm-9 col-sm-offset-3 vertical-gutter-10 padding-bottom-0">
+                <div>
+                    Nie masz konta?
+                    @Html.ActionLink("Zarejestruj Się", "Register", "User", new { displayRegisterPanel = true, displayActivateAccountPanel = false, displayRemindPasswordPanel = false }, null)
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-gutter-10">
+            <div class="col-sm-9 col-sm-offset-3 vertical-gutter-10 padding-top-0">
+                <div>
+                    Zapomniałeś Hasła?
+                    @Html.ActionLink("Przypomnij", "Register", "User", new { displayRegisterPanel = false, displayActivateAccountPanel = false, displayRemindPasswordPanel = true }, null)
+                </div>
+            </div>
+        </div>
+    </div>
+}

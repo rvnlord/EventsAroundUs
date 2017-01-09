@@ -1,0 +1,150 @@
+﻿
+@using System.Web.Mvc.Html
+@using MVCDemo.Common
+@using MVCDemo.Models
+@model UserToEditViewModel
+
+@{
+    var modelType = Model.GetType();
+    var userNameDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.UserName)));
+    var emailDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.Email)));
+    var avatarDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.Avatar)));
+    var currentIpDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.CurrentIp)));
+
+    var thumb = "~/Images/No_Image_Available.png";
+    var user = Model;
+    string location = ViewBag.Location.ToString();
+
+    string avatarUrl = null;
+    if (user.Avatar != null)
+    {
+        var extension = Path.GetExtension(user.Avatar.ImagePath)?.Replace(".", "");
+        var strBase64 = Convert.ToBase64String(user.Avatar.ImageData);
+        avatarUrl = "data:Image/" + extension + ";base64," + strBase64;
+    }
+}
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmEditPanel", @class = "form-horizontal row-cols-gutter-10" }))
+{
+    <div class="col-sm-12">
+        <div class="row row-cols-gutter-10">
+            <div class="col-xs-12 vertical-gutter-10">
+                <div class="title-container">Edycja Danych</div>
+            </div>
+        </div>
+        <div class="row row-cols-gutter-10">
+            <div class="col-xs-12 vertical-gutter-10">
+                <div class="content-container outer-container-gutter-10">
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="edit_editor_label">
+                                @Html.LabelFor(model => model.UserName, userNameDisplayName + ": ", new { @for = "UserName", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 vertical-gutter-10">
+                            <div class="edit_editor_field">
+                                @Html.TextBoxFor(model => model.UserName, new { disabled = "", @id = "dspUserName", @class = "form-control", Name = "UserName", @placeholder = userNameDisplayName + "..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-5 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="edit_editor_label">
+                                @Html.Label(currentIpDisplayName + ": ", new { @for = "CurrentIp", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 vertical-gutter-10">
+                            <div class="edit_editor_field">
+                                @Html.TextBox("CurrentIp", Extensions.ConvertIpToString(user.CurrentIp), new { disabled = "", @id = "dspCurrentIp", @class = "form-control", Name = "CurrentIp", @placeholder = currentIpDisplayName + "..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-5 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="edit_editor_label">
+                                @Html.Label("Lokalizacja: ", new { @for = "Location", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 vertical-gutter-10">
+                            <div class="edit_editor_field">
+                                @Html.TextBox("Location", location, new { disabled = "", @id = "dspLocation", @class = "form-control", Name = "Location", @placeholder = "Lokalizacja..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-5 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="edit_editor_label">
+                                @Html.LabelFor(model => model.Email, emailDisplayName + ": ", new { @for = "Email", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4 vertical-gutter-10">
+                            <div class="edit_editor_field">
+                                @Html.TextBoxFor(model => model.Email, new { @id = "txtEmail", @class = "form-control", Name = "Email", @placeholder = emailDisplayName + "..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-5 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="edit_editor_label">
+                                @Html.LabelFor(model => model.Avatar, avatarDisplayName + ": ", new { @for = "Avatar", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="edit_editor_field row row-cols-gutter-10 friends-item-row row-flex">
+                                <div class="col-fixed-rest-1 vertical-gutter-10">
+                                    <div id="divAvatar" name-"Avatar" class="dnd-img-handler">Upuść...</div>
+                                </div>
+                                <div class="col-fixed-100 vertical-gutter-10">
+                                    <div id="divAvatarContainer" class="dnd-img-container">
+                                        <div id="divAvatarDisplay" class="dnd-img-display" style="background-image: Url('@Url.Content(avatarUrl ?? thumb)')">
+                                            <div id="divDeleteAvatar" class="dnd-delete-image" style="display: @(avatarUrl != null ? "block" : "none")"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-5 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-gutter-10">
+                        <div class="col-xs-12 col-sm-offset-3 col-sm-4">
+                            <div id="divUploadAvatarStatusInfo">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 vertical-gutter-10">
+                            <div>
+                                <input type="button" id="btnSaveChanges" class="btn btn-primary" value="Zapisz" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

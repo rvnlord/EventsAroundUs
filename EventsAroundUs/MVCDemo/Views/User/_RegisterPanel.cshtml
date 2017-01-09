@@ -1,0 +1,104 @@
+﻿@using System.Web.Mvc.Html
+@using MVCDemo.Common
+@using MVCDemo.Models
+@model UserToRegisterViewModel
+
+@{
+    var modelType = Model.GetType();
+    var userNameDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.UserName)));
+    var passwordDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.Password)));
+    var confirmPasswordDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.ConfirmPassword)));
+    var emailDisplayName = DisplayNameHelper.GetDisplayName(modelType.GetProperty(nameof(Model.Email)));
+}
+
+@using (@Html.BeginForm(null, null, FormMethod.Post, new { id = "frmRegisterPanel", @class = "form-horizontal row-cols-gutter-10" }))
+{
+    <div class="col-sm-12">
+        <div class="row row-cols-gutter-10">
+            <div class="col-xs-12 vertical-gutter-10">
+                <div class="title-container">Rejestracja</div>
+            </div>
+        </div>
+        <div class="row row-cols-gutter-10">
+            <div class="col-xs-12 vertical-gutter-10">
+                <div class="content-container outer-container-gutter-10">
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_label">
+                                @Html.LabelFor(model => model.UserName, userNameDisplayName + ": ", new { @for = "UserName", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_field">
+                                @Html.TextBoxFor(model => model.UserName, new { @id = "txtUserName", @class = "form-control", Name = "UserName", @placeholder = userNameDisplayName + "..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_label">
+                                @Html.LabelFor(model => model.Password, passwordDisplayName + ": ", new { @for = "Password", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_field">
+                                @Html.PasswordFor(model => model.Password, new { @id = "txtPassword", @class = "form-control", Name = "Password", @placeholder = passwordDisplayName + "..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_label">
+                                @Html.LabelFor(model => model.ConfirmPassword, confirmPasswordDisplayName + ": ", new { @for = "ConfirmPassword", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_field">
+                                @Html.PasswordFor(model => model.ConfirmPassword, new { @id = "txtConfirmPassword", @class = "form-control", Name = "ConfirmPassword", @placeholder = confirmPasswordDisplayName + "..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_label">
+                                @Html.LabelFor(model => model.Email, emailDisplayName + ": ", new { @for = "Email", @class = "control-label" })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-3 vertical-gutter-10">
+                            <div class="registration_editor_field">
+                                @Html.TextBoxFor(model => model.Email, new { @id = "txtEmail", @class = "form-control", Name = "Email", @placeholder = emailDisplayName + "..." })
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 vertical-gutter-10">
+                            <div class="validation-indicator-container">
+                                <div id="validation-indicator-content"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group row-cols-gutter-10 vertical-gutter-0 vertical-margin-0">
+                        <div class="col-xs-12 vertical-gutter-10">
+                            <div>
+                                <input type="button" id="btnRegister" class="btn btn-primary" value="Zarejestruj" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
