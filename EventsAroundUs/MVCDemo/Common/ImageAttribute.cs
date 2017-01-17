@@ -16,7 +16,7 @@ namespace MVCDemo.Common
             var image = (Image) value;
 
             const int twoMb = 2 * 1024 * 1024;
-            var ext = Path.GetExtension(image.ImagePath);
+            var ext = Path.GetExtension(image.ImagePath)?.ToLower();
             var avalExts = new[] { ".jpg", ".png", ".gif", ".bmp" };
 
             if (image.ImageData.Length == 0 || image.ImageData.Length > twoMb || !avalExts.Contains(ext))

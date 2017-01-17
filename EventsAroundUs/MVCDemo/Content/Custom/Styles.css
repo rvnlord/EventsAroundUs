@@ -375,6 +375,7 @@ textarea.form-control {
     border: 1px solid #502f18;
     color: #fff;
     outline: 0 none;
+    resize: none;
 }
 
 .form-control[disabled],
@@ -389,6 +390,7 @@ textarea[disabled].form-control {
     border: 1px solid rgb(32, 32, 32);
     color: rgb(65, 65, 65);
     outline: 0 none;
+    resize: none;
 }
 
 ::-webkit-input-placeholder {

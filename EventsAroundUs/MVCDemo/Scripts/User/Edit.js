@@ -167,7 +167,7 @@ function divDeleteAvatar_Click(e) {
                 });
                 var d = new Date();
                 $("#divAvatarDisplay").css({
-                    "background-image": "url('" + data.Path + "?" + d.getTime() + "')"
+                    "background-image": "url('" + data.Path + "#t=" + d.getTime() + "')"
                 });
                 $("#divDeleteAvatar").hide();
                 $("#divAvatar, #divDeleteAvatar").prop("disabled", false);
@@ -386,8 +386,9 @@ function sendFileToServer(formData, statusBar) {
                     validationImage: "url('" + siteroot + "Images/Correct.png')"
                 });
                 var d = new Date();
+                var time = d.getTime();
                 $("#divAvatarDisplay").css({
-                    "background-image": "url('" + data.Path + "?" + d.getTime() + "')"
+                    "background-image": "url('" + data.Path + "#t=" + time + "')"
                 });
                 $("#divDeleteAvatar").show();
                 $("#divAvatar, #divDeleteAvatar").prop("disabled", false);
