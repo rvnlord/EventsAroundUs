@@ -26,6 +26,7 @@
     <TargetFrameworkProfile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -398,7 +399,6 @@
     <Compile Include="Common\Encryption.cs" />
     <Compile Include="Models\DateTimeWithZone.cs" />
     <Compile Include="Models\Message.cs" />
-    <Compile Include="Models\FriendRelationship.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\IpBlock.cs" />
     <Compile Include="Models\Key.cs" />

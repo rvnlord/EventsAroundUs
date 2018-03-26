@@ -612,7 +612,7 @@ namespace MVCDemo.Controllers
                 var userToEdit = new UserToEditViewModel();
                 Mapper.Map(dbUser, userToEdit);
 
-                ViewBag.Location = dbUser.GetLocation();
+                ViewBag.Location = dbUser.GetLocation() ?? new Location();
                 return JsonConvert.SerializeObject(new
                 {
                     PartialView = RenderPartialView("_EditPanel", userToEdit),

@@ -12,7 +12,7 @@ function btnSaveChanges_Click(e) {
         loaderHeight: 64,
         loaderWidth: 64
     });
-
+    
     $.ajax({
         async: true,
         url: siteroot + "User/SaveChanges",

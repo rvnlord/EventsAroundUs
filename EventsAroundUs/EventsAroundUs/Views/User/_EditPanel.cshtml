@@ -13,7 +13,7 @@
 
     var thumb = "~/Images/No_Image_Available.png";
     var user = Model;
-    string location = ViewBag.Location.ToString();
+    string location = ViewBag?.Location?.ToString() ?? "Nie można określić";
 
     string avatarUrl = null;
     if (user.Avatar != null)

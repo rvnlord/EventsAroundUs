@@ -1,7 +1,6 @@
 ﻿// #region === OGÓLNE ZMIENNE ===
 
-// === OGÓLNE zMIENNE ===
-
+// === OGÓLNE ZMIENNE ===
 var debugMode = false;
 
 // - Zmienne
@@ -665,6 +664,9 @@ function displayLoginPanel() {
                             removeActiveFriendsPanel();
                             $(".body-container").hide();
                         }
+                        $("#divToolbarRow").removeClass("reorder-xs");
+                    } else {
+                        $("#divToolbarRow").addClass("reorder-xs");
                     }
                 }
             });
@@ -679,7 +681,8 @@ function displayLoginPanel() {
 function btnLoginSubmit_Click(e) {
     $("#btnLoginSubmit").prop("disabled", true);
 
-    var loginPanelHeight = $("#divLoginPanelContainer").innerHeight();
+    var loginPanelHeight = $("#divLoginPanelContainer").addClass("clearfix").innerHeight();
+    $("#divLoginPanelContainer").removeClass("clearfix");
     var loginPanelContent = $("#divLoginPanelContainer").contents();
     var userName = $("#txtLoginUserName").val();
     var password = $("#txtLoginPassword").val();
@@ -734,6 +737,7 @@ function btnLoginSubmit_Click(e) {
                                     $(".body-container").hide();
                                 }
                                 $("#btnLoginSubmit").prop("disabled", false);
+                                $("#divToolbarRow").removeClass("reorder-xs");
                             }
                         });
                     } else {
@@ -746,6 +750,7 @@ function btnLoginSubmit_Click(e) {
                             $(".body-container").show();
                         }
                         $("#btnLoginSubmit").prop("disabled", false);
+                        $("#divToolbarRow").addClass("reorder-xs");
                     }
                 }
             });
@@ -812,6 +817,7 @@ function lnkbtnLogout_Click(e) {
                     }
 
                     $(loginPanelView).appendTo($("#divLoginPanelContainer"));
+                    $("#divToolbarRow").removeClass("reorder-xs");
                 }
             });
         },
@@ -828,7 +834,7 @@ function lnkbtnLogout_Click(e) {
 // - wyświetla panel wyszukiwania
 function displaySearchPanel() {
     showUniversalLoader({
-        $target: $("#divSearchPanelContainer"),
+        $target: $("#divSearchPanelContainer"), 
         containerHeight: 34,
         loaderHeight: 24,
         loaderWidth: 24,
