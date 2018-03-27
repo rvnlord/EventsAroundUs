@@ -10,7 +10,7 @@ Project aims to provide simple notifications exchange between friends
  
 ### Visualization:
  * [Class and Use Case Diagrams (Excluding Common utility Classes, Controllers and ViewModels)](/Documentation/EventsAroundUs%20Diagrams.vpp)
- * [Descrption (PL)](/Documentation/Description%20PL.docx)
+ * [Description (PL)](/Documentation/Description%20PL.docx)
  * [DDL](/EventsAroundUs/database.sql)
  
 ### Working example:
