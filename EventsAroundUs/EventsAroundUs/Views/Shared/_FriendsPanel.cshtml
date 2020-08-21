@@ -6,13 +6,15 @@
     const string thumb = "~/Images/No_Image_Available.png";
     var users = Model;
     var authUserVM = UserToLoginViewModel.GetAuthenticated();
-    var authUser = new ProjectDbContext().Users.Include(u => u.AddedToFriends)
+    var db = new ProjectDbContext();
+    var authUser = db.Users.Include(u => u.AddedToFriends)
         .Single(u => u.UserName == authUserVM.UserName);
 }
 <div class="container outer-container-gutter-10">
     <div class="row row-cols-gutter-10">
         @foreach (var u in users)
         {
+            
             var avatar = u.AvatarId == null || u.Avatar == null ? thumb : u.Avatar.FullUrl;
             var isNotPartialFriend = !authUser.HasAddedToFriends(u) && !authUser.IsAddedAsFriendBy(u);
             if (isNotPartialFriend)

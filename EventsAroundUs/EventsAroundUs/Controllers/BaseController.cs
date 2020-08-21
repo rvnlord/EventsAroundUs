@@ -249,8 +249,9 @@ namespace MVCDemo.Controllers
                 var queryNotYetPartialFriends = db.Users
                     .Where(u => partialFriendsIds.All(pfid => pfid != u.Id))
                     .Where(u => u.Id != authUser.Id);
+                    //.Include(u => u.Avatar);
 
-                List<User> notYetPartialFriendsSearched = null;
+                List<User> notYetPartialFriendsSearched = null; // TODO: Local IIS not stopping on breakpoints in cshtml
 
                 if (!string.IsNullOrWhiteSpace(searchTerm))
                     notYetPartialFriendsSearched = queryNotYetPartialFriends.Where(u => u.UserName.Contains(searchTerm))

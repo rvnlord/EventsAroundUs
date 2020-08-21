@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using MVCDemo.Common;
 
 namespace MVCDemo.CustomHtmlHelpers
 {
     public static class CustomHtmlHelpers
     {
-        public static IHtmlString Image(this HtmlHelper helper, string src, string alt)
+        public static IHtmlString Image(this HtmlHelper html, string src, string alt)
         {
             var tb = new TagBuilder("img");
+            //var t = html.ViewContext.HttpContext.GetAbsoluteUrl(src);
             tb.Attributes.Add("src", VirtualPathUtility.ToAbsolute(src));
             tb.Attributes.Add("alt", alt);
             return new MvcHtmlString(tb.ToString(TagRenderMode.SelfClosing));

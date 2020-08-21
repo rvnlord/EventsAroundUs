@@ -1205,6 +1205,8 @@ function notificationHeaderContainer_Click(e) {
     var $contentContainer = $headerContainer
         .closest(".notifications-content-container")
         .find(".notification-content-container[notification-id='" + nId + "']");
+    var $textArea = $contentContainer.find("textarea");
+    $textArea.val($textArea.text().trim()); // Fix for a very weird bug that prevents textarea value from being updated on setting its text
     if ($headerContainer.hasClass("notification-bar-shown")) {
         $contentContainer.stop(true, true).slideUp(500, function () {
             $headerContainer.removeClass("notification-bar-shown").addClass("notification-bar-hidden");
@@ -1433,7 +1435,7 @@ $(document).ready(function () {
     $(document).on("click", ".notification-header-container", function (e) {
         notificationHeaderContainer_Click(e); //.notification-content-container
     });
-
+    
     $(document).on("click", ".btn-remove-notification", function (e) {
         btnRemoveNotification_Click(e); 
     });

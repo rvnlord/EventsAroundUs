@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Migrations;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -434,11 +435,8 @@ namespace MVCDemo.Models
             {
                 try
                 {
-                    var dbPrivateKey = db.Keys.Single(k => k.Id == "email_private");
-                    var dbPublicKey = db.Keys.Single(k => k.Id == "email_public");
-                    var privateKey = dbPrivateKey.Value;
-
-                    //var xmlPath = HttpContext.Current.Server.MapPath("~/Data/Email.xml");
+                    var dbPrivateKey = db.Keys.SingleOrDefault(k => k.Id == "email_private");
+                    var privateKey = dbPrivateKey?.Value;
                     var xmlPath = $@"{AppDomain.CurrentDomain.BaseDirectory}Data\Email.xml";
                     
                     var doc = XDocument.Load(xmlPath);
@@ -449,29 +447,17 @@ namespace MVCDemo.Models
                     var port = Convert.ToInt32(network?.Attribute("port")?.Value);
                     var address = smtp?.Attribute("from")?.Value ?? "";
                     var userName = network?.Attribute("userName")?.Value;
-                    var plainPasswordBackup = network?.Attribute("plainpasswordbackup")?.Value;
-                    var password = "";
-
-                    try
-                    {
-                        password = RsaDecryptWithPrivate(network?.Attribute("password")?.Value, privateKey);
-                    }
-                    catch (Exception)
-                    {
-                        if (string.IsNullOrWhiteSpace(password) && !string.IsNullOrWhiteSpace(plainPasswordBackup)) // jeśli błąd został wyrzucony podczas deszyfrowania hasła obecnymi kluczami, sprawdź czy istnieje kopia hasła w pliku XML i użyj jej
-                        {
-                            password = plainPasswordBackup;
-                        }
-                    }
-
+                    var rawPassword = network?.Attribute("rawpassword")?.Value;
+                    var password = rawPassword ?? RsaDecryptWithPrivate(network?.Attribute("password")?.Value, privateKey);
                     var enableSsl = network?.Attribute("enableSsl")?.Value;
 
                     var keys = RsaGenerateKeys();
                     network?.SetAttributeValue("password", RsaEncryptWithPublic(password, keys.Public));
+                    network?.Attribute("rawpassword")?.Remove();
                     doc.Save(xmlPath);
 
-                    dbPrivateKey.Value = keys.Private;
-                    dbPublicKey.Value = keys.Public;
+                    db.Keys.AddOrUpdate(new Key { Id = "email_private", Value = keys.Private });
+                    db.Keys.AddOrUpdate(new Key { Id = "email_public", Value = keys.Public });
                     db.SaveChanges();
 
                     var mailMessage = new MailMessage(address, Email)
@@ -492,13 +478,6 @@ namespace MVCDemo.Models
                     };
 
                     smtpClient.Send(mailMessage);
-
-                    if (!string.IsNullOrWhiteSpace(plainPasswordBackup))
-                    {
-                        network?.SetAttributeValue("plainpasswordbackup", "");
-                        doc.Save(xmlPath);
-                    }
-
                     return ActionStatus.Success;
                 }
                 catch (Exception)

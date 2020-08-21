@@ -788,7 +788,8 @@ namespace MVCDemo.Controllers
                 var avatar = dbUser.Avatar;
                 dbUser.AvatarId = null;
                 dbUser.Avatar = null;
-                if (avatar != null) db.Images.Remove(avatar);
+                if (avatar != null && !db.Users.Any(u => u.Id != loggedUser.Id && u.AvatarId == avatar.Id)) 
+                    db.Images.Remove(avatar);
                 var userToEdit = new UserToEditViewModel();
 
                 Mapper.Map(dbUser, userToEdit);
@@ -817,7 +818,8 @@ namespace MVCDemo.Controllers
                     });
                 }
 
-                dbUser.Avatar = userToEdit.Avatar;
+                db.Images.Add(userToEdit.Avatar);
+                dbUser.AvatarId = userToEdit.Avatar.Id;
                 db.SaveChanges();
 
                 var extension = Path.GetExtension(file.FileName)?.Replace(".", "");

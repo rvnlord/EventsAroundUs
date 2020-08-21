@@ -17,6 +17,21 @@ namespace MVCDemo.Common
 {
     public static class Extensions
     {
+        public static bool IsNullOrWhiteSpace(this string str)
+        {
+            return string.IsNullOrWhiteSpace(str);
+        }
+
+        public static string Skip(this string str, int n)
+        {
+            return new string(str.AsEnumerable().Skip(n).ToArray());
+        }
+
+        public static bool StartsWithAny(this string str, params string[] strings)
+        {
+            return strings.Any(str.StartsWith);
+        }
+
         public static IEnumerable<string> SplitInParts(this string s, int partLength)
         {
             if (s == null)
